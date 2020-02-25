@@ -13,8 +13,10 @@ export class Authorizer {
     public async getTokenRights(token: string): Promise<AccessRights[]> {
         const accessRights: AccessRights[] = [];
 
-        const result = await get(this.authorizerUrl, { body: { token: token } });
+        const result: AccessRights[] = await get(this.authorizerUrl, { body: { token: token } });
 
         return accessRights;
     }
+
+    public async generateSessionToken() { };
 }
