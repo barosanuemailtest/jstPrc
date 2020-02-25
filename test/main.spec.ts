@@ -1,7 +1,7 @@
 import { SessionTokenDBAccess } from '../src/app/Authorization/SessionTokenDBAccess'
 import { SessionTokenDBAccessSqllite } from '../src/app/Authorization/SessionTokenDBAccessSqllite';
 
-test('SessionTokenDBAccess', async () => {
+test('SessionTokenDBAccess storeToken', async () => {
     const sessionTokenDBAccess = new SessionTokenDBAccess();
     await sessionTokenDBAccess.storeToken({
         accessRights: [],
@@ -10,6 +10,12 @@ test('SessionTokenDBAccess', async () => {
         userName: 'sefu barosanu',
         valid: true
     });
+})
+
+test.only('SessionTokenDBAccess', async () => {
+    const sessionTokenDBAccess = new SessionTokenDBAccess();
+    const token = await sessionTokenDBAccess.getToken('abc');
+    console.log(token);
 })
 
 test.skip('SessionTokenDBAccess - SQLlite', async () => {
