@@ -14,8 +14,16 @@ export class SessionTokenDBAccess {
         this.nedb.insert(token);
     }
 
-    public async getToken(tokenId: string): Promise<SessionToken> {
-        return {} as any;
+    public async getToken(tokenId: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.nedb.find({ tokenId: tokenId }, (err: Error, docs: any) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
+        });
     }
 
     public async invalidateToken(tokenId: string) {

@@ -1,18 +1,18 @@
 import { SessionTokenDBAccess } from '../src/app/Authorization/SessionTokenDBAccess'
 import { SessionTokenDBAccessSqllite } from '../src/app/Authorization/SessionTokenDBAccessSqllite';
 
-test.skip('SessionTokenDBAccess', async () => {
+test('SessionTokenDBAccess', async () => {
     const sessionTokenDBAccess = new SessionTokenDBAccess();
     await sessionTokenDBAccess.storeToken({
         accessRights: [],
         expirationTime: new Date(),
-        tokenId: 'sdfsdfsdfsd',
+        tokenId: 'abc',
         userName: 'sefu barosanu',
         valid: true
     });
 })
 
-test('SessionTokenDBAccess - SQLlite', async () => {
+test.skip('SessionTokenDBAccess - SQLlite', async () => {
     try {
         const sessionTokenDBAccess = new SessionTokenDBAccessSqllite();
     } catch (error) {
@@ -22,7 +22,7 @@ test('SessionTokenDBAccess - SQLlite', async () => {
     // await sessionTokenDBAccess.storeToken({
     //     accessRights: [],
     //     expirationTime: new Date(),
-    //     tokenId: 'sdfsdfsdfsd',
+    //     tokenId: 'abc',
     //     userName: 'sefu barosanu',
     //     valid: true
     // });
