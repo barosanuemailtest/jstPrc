@@ -1,4 +1,4 @@
-import { SessionToken } from './Model';
+import { SessionToken } from '../src/app/Authorization/Model';
 import * as Sqlite3 from 'sqlite3';
 
 export class SessionTokenDBAccessSqllite {
