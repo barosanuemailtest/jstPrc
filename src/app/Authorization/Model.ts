@@ -12,3 +12,9 @@ export enum AccessRights {
     CHANGE_BASIC_DATA,
     CHANGE_EXTENDED_DATA
 }
+
+export interface UserCredentials {
+    userName: string;
+    password: string;
+    accessRights: AccessRights[]
+}

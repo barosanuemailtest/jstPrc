@@ -1,12 +1,27 @@
 import { SessionTokenDBAccess } from './SessionTokenDBAccess';
-import { AccessRights } from './Model';
+import { AccessRights, SessionToken } from './Model';
+import { UserCredentialsDBAccess } from './UserCredentialsDBAccess';
 
 
 export class Authorizer {
-    private sessionTokenDBAccess: SessionTokenDBAccess;
 
-    public constructor(sessionTokenDBAccess = new SessionTokenDBAccess) {
+    private sessionTokenDBAccess: SessionTokenDBAccess;
+    private userCredentialsDBAccess: UserCredentialsDBAccess;
+
+    public constructor(sessionTokenDBAccess = new SessionTokenDBAccess,
+        userCredentialsDBAccess = new UserCredentialsDBAccess
+    ) {
         this.sessionTokenDBAccess = sessionTokenDBAccess;
+        this.userCredentialsDBAccess = userCredentialsDBAccess;
+    }
+
+    public async loginUser(userName: string, password: string): Promise<SessionToken | null> {
+        const user = await this.userCredentialsDBAccess.getUserCredential(userName, password);
+        if (user == null) {
+            return null;
+        } else {
+            return {} as any;
+        }
     }
 
     public async getTokenRights(tokenId: string): Promise<AccessRights[]> {
@@ -18,7 +33,7 @@ export class Authorizer {
 
     }
 
-    public async generateSessionToken(user: string) { 
-        
+    public async generateSessionToken(user: string) {
+
     };
 }
