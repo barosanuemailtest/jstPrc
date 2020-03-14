@@ -22,13 +22,17 @@ export class SessionTokenDBAccess {
         });
     }
 
-    public async getToken(tokenId: string): Promise<any> {
+    public async getToken(tokenId: string): Promise<SessionToken | null> {
         return new Promise((resolve, reject) => {
             this.nedb.find({ tokenId: tokenId }, (err: Error, docs: any) => {
                 if (err) {
                     return reject(err);
                 } else {
-                    resolve(docs);
+                    if (docs.length == 0) {
+                        return resolve(null);
+                    } else {
+                        return resolve(docs[0]);
+                    }
                 }
             });
         });

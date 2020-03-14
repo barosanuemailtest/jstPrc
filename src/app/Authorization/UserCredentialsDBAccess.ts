@@ -33,7 +33,6 @@ export class UserCredentialsDBAccess {
                     } else {
                         return resolve(docs[0]);
                     }
-
                 }
             });
         });

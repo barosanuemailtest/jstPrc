@@ -41,10 +41,16 @@ test('UserCredentialDBAccess', async () => {
     console.log(getResult);
 })
 
-test.only('UserCredentialDBAccess', async () => {
+test('authorizer.loginUser', async () => {
     const authorizer = new Authorizer();
     const loginResult = await authorizer.loginUser('sefu', '1234');
     console.log(loginResult);
+})
+
+test.only('authorizer.tokenState', async () => {
+    const authorizer = new Authorizer();
+    const tokenRights = await authorizer.getTokenRights('qmrjltup1fma109nvxvf');
+    console.log(tokenRights);
 })
 
 

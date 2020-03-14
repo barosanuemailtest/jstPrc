@@ -1,5 +1,5 @@
 import { SessionTokenDBAccess } from './SessionTokenDBAccess';
-import { AccessRights, SessionToken } from './Model';
+import { AccessRights, SessionToken, TokenRights, TokenState } from './Model';
 import { UserCredentialsDBAccess } from './UserCredentialsDBAccess';
 
 
@@ -32,9 +32,22 @@ export class Authorizer {
         }
     }
 
-    public async getTokenRights(tokenId: string): Promise<AccessRights[]> {
+    public async getTokenRights(tokenId: string): Promise<TokenRights> {
         const token = await this.sessionTokenDBAccess.getToken(tokenId);
-        return token.accessRights;
+        if (!token || !token.valid) {
+            return {
+                accessRights: [],
+                state: TokenState.INVALID
+            };
+        } else if (token.expirationTime < new Date()) {
+            return {
+                accessRights: [],
+                state: TokenState.EXPIRED
+            };
+        } else return {
+            accessRights: token.accessRights,
+            state: TokenState.VALID
+        }
     }
 
     public authorizeOperation(accessRight: AccessRights, tokenId: string) {

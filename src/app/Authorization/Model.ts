@@ -6,7 +6,12 @@ export interface SessionToken {
     accessRights: AccessRights[]
 }
 
-export enum tokenState {
+export interface TokenRights {
+    accessRights: AccessRights[],
+    state: TokenState
+}
+
+export enum TokenState {
     VALID,
     INVALID,
     EXPIRED
@@ -23,4 +28,8 @@ export interface UserCredentials {
     userName: string;
     password: string;
     accessRights: AccessRights[]
+}
+
+export class InvalidTokenError extends Error {
+
 }
