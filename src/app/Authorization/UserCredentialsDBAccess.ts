@@ -22,13 +22,18 @@ export class UserCredentialsDBAccess {
         });
     }
 
-    public async getUserCredential(username: string, password: string): Promise<UserCredentials> {
+    public async getUserCredential(username: string, password: string): Promise<UserCredentials | null> {
         return new Promise((resolve, reject) => {
-            this.nedb.find({ userName: username, password: password }, (err: Error, docs: any) => {
+            this.nedb.find({ userName: username, password: password }, (err: Error, docs: UserCredentials[]) => {
                 if (err) {
                     return reject(err);
                 } else {
-                    resolve(docs);
+                    if (docs.length == 0) {
+                        return resolve(null);
+                    } else {
+                        return resolve(docs[0]);
+                    }
+
                 }
             });
         });

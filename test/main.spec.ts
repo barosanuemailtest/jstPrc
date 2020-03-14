@@ -1,6 +1,7 @@
 import { SessionTokenDBAccess } from '../src/app/Authorization/SessionTokenDBAccess'
 import { SessionTokenDBAccessSqllite } from '../gunoi/SessionTokenDBAccessSqllite';
 import { UserCredentialsDBAccess } from '../src/app/Authorization/UserCredentialsDBAccess';
+import { Authorizer } from '../src/app/Authorization/Authorizer';
 
 test('SessionTokenDBAccess storeToken', async () => {
     const sessionTokenDBAccess = new SessionTokenDBAccess();
@@ -31,13 +32,19 @@ test('UserCredentialDBAccess', async () => {
     console.log(putResult);
 })
 
-test.only('UserCredentialDBAccess', async () => {
+test('UserCredentialDBAccess', async () => {
     const userCredentialsDBAccess = new UserCredentialsDBAccess();
     const getResult = await userCredentialsDBAccess.getUserCredential(
         'sefu',
         '1234'
     );
     console.log(getResult);
+})
+
+test.only('UserCredentialDBAccess', async () => {
+    const authorizer = new Authorizer();
+    const loginResult = await authorizer.loginUser('sefu', '1234');
+    console.log(loginResult);
 })
 
 

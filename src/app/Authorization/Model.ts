@@ -6,6 +6,12 @@ export interface SessionToken {
     accessRights: AccessRights[]
 }
 
+export enum tokenState {
+    VALID,
+    INVALID,
+    EXPIRED
+}
+
 export enum AccessRights {
     READ_BASIC_INFO,
     READ_EXTENDED_INFO,
