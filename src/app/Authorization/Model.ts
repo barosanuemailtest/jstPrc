@@ -29,7 +29,3 @@ export interface UserCredentials {
     password: string;
     accessRights: AccessRights[]
 }
-
-export class InvalidTokenError extends Error {
-
-}
