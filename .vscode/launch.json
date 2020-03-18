@@ -20,5 +20,18 @@
             "windows": {
                 "program": "${workspaceFolder}/node_modules/jest/bin/jest",
             }
-        ]
-    }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug server",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register"
+            ],
+            "args": [
+                "${workspaceFolder}/src/Launcher.ts"
+            ]
+        }
+    ]
+}

@@ -14,17 +14,25 @@ export class Server {
                 default:
                     break;
             }
-
-            console.log('out of the await')
-
-
-
             res.end();
         }).listen(8080);
         console.log('started server')
     }
 
     private async handleLogin(request: http.IncomingMessage, response: http.ServerResponse) {
+        if (request.method !== 'POST') {
+            response.statusCode = 404;
+            return;
+        }
+        let body = '';
+        request.on('data', data => {
+            console.log('gotData: ' + data);
+            body += data;
+        })
+        console.log('parsing body: ' + body)
+        const parsedBody = JSON.parse(body);
+        const userName = parsedBody.username;
+        const password = parsedBody.password;
         response.write('you logged in...')
     }
 
