@@ -1,9 +1,6 @@
 import { Utils } from '../src/app/Server/Utils';
-import { UrlWithParsedQuery } from 'url';
 
 describe.only('ServerUtils test', () => {
-
-    let parsedUrl: UrlWithParsedQuery;
 
     test('parse simple url', () => {
         const parsedUrl = Utils.parseUrl('http://localhost:8080/login');
@@ -13,8 +10,14 @@ describe.only('ServerUtils test', () => {
         expect(parsedUrl.path).toBe('/login');
         expect(parsedUrl.port).toBe('8080');
         expect(parsedUrl.protocol).toBe('http:');
-        expect(parsedUrl.query).toBeNull();
-
+        expect(parsedUrl.query).toEqual({});
     })
+    test('parse url with query', () => {
+        const parsedUrl = Utils.parseUrl('http://localhost:8080/empldetails?function=admin&wage=10');
+        expect(parsedUrl.query).toEqual({
+            function: 'admin',
+            wage: '10'
+        });
+    });
 
 });
