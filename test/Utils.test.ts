@@ -1,6 +1,6 @@
 import { Utils } from '../src/app/Server/Utils';
 
-describe.only('ServerUtils test', () => {
+describe.skip('ServerUtils test', () => {
 
     test('parse simple url', () => {
         const parsedUrl = Utils.parseUrl('http://localhost:8080/login');
