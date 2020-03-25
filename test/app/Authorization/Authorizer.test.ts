@@ -32,8 +32,8 @@ describe('Authorizer test suite', () => {
             expect(sessionTokenDBAccessMock.storeToken).not.toHaveBeenCalled();
         })
         test('should sessionToken if valid credentials', async () => {
-            jest.spyOn(global.Math, 'random').mockReturnValue(0.123);
-            jest.spyOn(global.Date, 'now').mockReturnValue(0);
+            jest.spyOn(global.Math, 'random').mockReturnValueOnce(0.123).mockReturnValueOnce(0.123);
+            jest.spyOn(global.Date, 'now').mockReturnValueOnce(0);
             const expectedSessionToken = {
                 accessRights: [1, 2, 3],
                 userName: 'someUserName',
