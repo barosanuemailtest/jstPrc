@@ -26,11 +26,12 @@ describe('SessionTokenDBAccess test suite', () => {
     }
 
     test('store token with no error', async () => {
-        nedbMock.insert.mockImplementationOnce((someToken, cb) => {
+        const bar = (someToken: any, cb: any) => {
             cb()
-        });
+        }
+        nedbMock.insert.mockImplementationOnce(bar);
         await sessionTokenDBAccess.storeToken(someToken);
-        // expect(nedbMock.insert).toBeCalledWith(someToken);
-    });
+        expect(nedbMock.insert).toBeCalledWith(bar);
 
+    });
 });
