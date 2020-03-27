@@ -1,6 +1,8 @@
-import { Utils } from '../src/app/Server/Utils';
 
-describe.skip('ServerUtils test', () => {
+import { Utils } from '../src/app/Server/Utils';
+import { parse, UrlWithParsedQuery } from 'url';
+
+describe('ServerUtils test', () => {
 
     test('parse simple url', () => {
         const parsedUrl = Utils.parseUrl('http://localhost:8080/login');
@@ -19,5 +21,10 @@ describe.skip('ServerUtils test', () => {
             wage: '10'
         });
     });
+    test('parse url with query', () => {
+        jest.fn(parse).mock;
+        const parsedUrl = Utils.parseUrl('http://localhost:8080/empldetails?function=admin&wage=10');
+    });
+
 
 });
