@@ -19,7 +19,6 @@ describe('Authorizer test suite', () => {
     })
     afterEach(() => {
         jest.clearAllMocks()
-
     });
 
     describe('loginUser tests', () => {
