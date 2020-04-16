@@ -1,6 +1,6 @@
 
 import { Utils } from '../src/app/Server/Utils';
-import { parse, UrlWithParsedQuery } from 'url';
+import * as url from 'url';
 
 describe('ServerUtils test', () => {
 
@@ -21,10 +21,14 @@ describe('ServerUtils test', () => {
             wage: '10'
         });
     });
-    test('parse url with query', () => {
-        jest.fn(parse).mock;
-        const parsedUrl = Utils.parseUrl('http://localhost:8080/empldetails?function=admin&wage=10');
-    });
+    it('should parse url', () => {
+        const parseSpy = jest.spyOn(url, 'parse');
+        const actual = Utils.parseUrl('http://stackoverflow.com');
+        expect(actual.href).toBe('http://stackoverflow.com/');
+        expect(actual.protocol).toBe('http:');
+        expect(parseSpy).toBeCalledWith('http://stackoverflow.com', true);
+        parseSpy.mockRestore();
+      });
 
 
 });
