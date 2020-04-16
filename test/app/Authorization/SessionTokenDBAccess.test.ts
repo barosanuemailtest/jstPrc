@@ -31,7 +31,16 @@ describe('SessionTokenDBAccess test suite', () => {
         }
         nedbMock.insert.mockImplementationOnce(bar);
         await sessionTokenDBAccess.storeToken(someToken);
-        expect(nedbMock.insert).toBeCalledWith(bar);
+        expect(nedbMock.insert).toBeCalledWith(someToken, expect.any(Function));
+    });
 
+    test('store token with error', async () => {
+        const bar = (someToken: any, cb: any) => {
+            cb(new Error("something went wrong"))
+        }
+        nedbMock.insert.mockImplementationOnce(bar);
+
+        await expect(sessionTokenDBAccess.storeToken(someToken)).rejects.toThrow("something went wrong");
+        expect(nedbMock.insert).toBeCalledWith(someToken, expect.any(Function));
     });
 });
