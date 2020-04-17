@@ -7,7 +7,7 @@ describe('SessionTokenDBAccess test suite', () => {
 
     let sessionTokenDBAccess: SessionTokenDBAccess;
 
-    let nedbMock = {
+    const nedbMock = {
         loadDatabase: jest.fn(),
         insert: jest.fn(),
         find: jest.fn()
