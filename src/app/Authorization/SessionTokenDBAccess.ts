@@ -37,8 +37,4 @@ export class SessionTokenDBAccess {
             });
         });
     }
-
-    public async invalidateToken(tokenId: string) {
-
-    }
 }

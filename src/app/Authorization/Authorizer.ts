@@ -50,14 +50,6 @@ export class Authorizer {
         }
     }
 
-    public authorizeOperation(accessRight: AccessRights, tokenId: string) {
-
-    }
-
-    public async generateSessionToken(user: string) {
-
-    };
-
     private generateRandomTokenId(): string {
         return this.generateRandomString() + this.generateRandomString();
     }

@@ -1,6 +1,9 @@
 import { Authorizer } from '../../../src/app/Authorization/Authorizer';
 import { TokenState } from '../../../src/app/Authorization/Model';
-
+import { SessionTokenDBAccess } from '../../../src/app/Authorization/SessionTokenDBAccess';
+import { UserCredentialsDBAccess } from '../../../src/app/Authorization/UserCredentialsDBAccess';
+jest.mock('../../../src/app/Authorization/SessionTokenDBAccess');
+jest.mock('../../../src/app/Authorization/UserCredentialsDBAccess');
 
 
 describe('Authorizer test suite', () => {
@@ -98,5 +101,10 @@ describe('Authorizer test suite', () => {
                 state: TokenState.VALID
             });
         });
+        test('constructor arguments', () => {
+            new Authorizer();
+            expect(SessionTokenDBAccess).toBeCalledTimes(1)
+            expect(UserCredentialsDBAccess).toBeCalledTimes(1)
+        })
     })
 });
