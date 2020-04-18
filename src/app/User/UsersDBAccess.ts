@@ -10,11 +10,31 @@ export class UsersDBAccess {
     }
 
     public async putUser(user: User): Promise<void> {
-
+        return new Promise((resolve, reject) => {
+            this.nedb.insert(user, (err: Error) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    return resolve();
+                }
+            })
+        });
     }
 
-    public async getUserById(userId: string): Promise<User> {
-        return {} as User;
+    public async getUserById(userId: string): Promise<User | null> {
+        return new Promise((resolve, reject) => {
+            this.nedb.find({ id: userId }, (err: Error, docs: any) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    if (docs.length == 0) {
+                        return resolve(null);
+                    } else {
+                        return resolve(docs[0]);
+                    }
+                }
+            });
+        });
     }
 
 

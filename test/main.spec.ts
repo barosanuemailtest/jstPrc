@@ -2,6 +2,7 @@ import { SessionTokenDBAccess } from '../src/app/Authorization/SessionTokenDBAcc
 import { SessionTokenDBAccessSqllite } from '../gunoi/SessionTokenDBAccessSqllite';
 import { UserCredentialsDBAccess } from '../src/app/Authorization/UserCredentialsDBAccess';
 import { Authorizer } from '../src/app/Authorization/Authorizer';
+import { UsersDBAccess } from '../src/app/User/UsersDBAccess';
 
 describe.skip('main spec suite', () => {
 
@@ -55,6 +56,23 @@ describe.skip('main spec suite', () => {
         const tokenRights = await authorizer.getTokenRights('qmrjltup1fma109nvxvf');
         console.log(tokenRights);
     })
+
+    test('put user', async () => {
+        const userDatabase = new UsersDBAccess();
+        await userDatabase.putUser({
+            age: 23,
+            email: 'some@email.com',
+            id: '1233sdf',
+            name: 'sefu',
+            workingPosition: 2
+        });
+    });
+
+    test.only('get user', async () => {
+        const userDatabase = new UsersDBAccess();
+        const user = await userDatabase.getUserById('1233sdf');
+        console.log(user);
+    });
 
 
 
