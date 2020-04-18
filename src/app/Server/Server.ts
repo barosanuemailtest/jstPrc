@@ -2,7 +2,7 @@ import { createServer, IncomingMessage, ServerResponse } from 'http';
 import { Authorizer } from '../Authorization/Authorizer';
 import { LoginHandler } from './LoginHandler';
 
-
+/* istanbul ignore file */
 export class Server {
 
     private authorizer: Authorizer;

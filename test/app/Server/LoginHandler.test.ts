@@ -50,7 +50,7 @@ describe('LoginHandler test suite', () => {
         expect(authorizerMock.loginUser).toHaveBeenCalledTimes(0);
     });
 
-    test('request method POST with requestBody', async () => {
+    test('request method POST with requestBody and valid response', async () => {
         requestMock.method = 'POST';
         requestMock.on.mockImplementation(
             (event: string, cb: any) => {
@@ -74,6 +74,52 @@ describe('LoginHandler test suite', () => {
         expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.CREATED, { 'Content-Type': 'application/json' });
         expect(responseMock.write).toBeCalledTimes(1);
         expect(responseMock.write).toBeCalledWith(JSON.stringify(someToken));
+    });
+
+    test('request method POST with requestBody and no response', async () => {
+        requestMock.method = 'POST';
+        requestMock.on.mockImplementation(
+            (event: string, cb: any) => {
+                console.log(event);
+                switch (event) {
+                    case 'data':
+                        cb(rawRequestBody)
+                        break;
+                    case 'end':
+                        cb()
+                        break;
+                }
+            }
+        )
+        authorizerMock.loginUser.mockReturnValue(null);
+        await loginHandler.handleRequest();
+        expect(authorizerMock.loginUser).toHaveBeenCalledTimes(1);
+        expect(authorizerMock.loginUser).toHaveBeenCalledWith('someUserName', 'somePassword')
+        expect(responseMock.statusCode).toBe(HTTP_CODES.NOT_fOUND);
+        expect(responseMock.write).toBeCalledTimes(1);
+        expect(responseMock.write).toBeCalledWith('wrong username or password');
+    });
+
+    test('request method POST with error', async () => {
+        requestMock.method = 'POST';
+        requestMock.on.mockImplementation(
+            (event: string, cb: any) => {
+                console.log(event);
+                switch (event) {
+                    case 'data':
+                        cb(rawRequestBody)
+                        break;
+                    case 'error':
+                        cb(new Error('cannot read request body!'))
+                        break;
+                }
+            }
+        )
+        authorizerMock.loginUser.mockReturnValue(null);
+        await loginHandler.handleRequest();
+        expect(responseMock.statusCode).toBe(HTTP_CODES.INTERNAL_SERVER_ERROR);
+        expect(responseMock.write).toBeCalledTimes(1);
+        expect(responseMock.write).toBeCalledWith('Internal error: cannot read request body!');
     });
 
 });
