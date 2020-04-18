@@ -45,7 +45,7 @@ describe.skip('main spec suite', () => {
         console.log(getResult);
     })
 
-    test('authorizer.loginUser', async () => {
+    test.only('authorizer.loginUser', async () => {
         const authorizer = new Authorizer();
         const loginResult = await authorizer.loginUser('sefu', '1234');
         console.log(loginResult);

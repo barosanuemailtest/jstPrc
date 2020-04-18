@@ -28,3 +28,4 @@ POST http://localhost:8080/users/get?id=123
 
 ###
 GET http://localhost:8080/users/get?id=1233sdf
+Authorization: v7ver7809jbt24uy3m9su

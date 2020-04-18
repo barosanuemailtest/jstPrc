@@ -18,10 +18,10 @@ export enum TokenState {
 }
 
 export enum AccessRights {
-    READ_BASIC_INFO,
-    READ_EXTENDED_INFO,
-    CHANGE_BASIC_DATA,
-    CHANGE_EXTENDED_DATA
+    CREATE,
+    READ,
+    UPDATE,
+    DELETE
 }
 
 export interface UserCredentials {
