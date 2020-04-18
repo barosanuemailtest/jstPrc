@@ -14,8 +14,8 @@ export class UserController {
         await this.userDBAccess.putUser(user);
     }
 
-    public async getUserById(userId: string) {
-        await this.userDBAccess.getUserById(userId);
+    public async getUserById(userId: string): Promise<User> {
+        return await this.userDBAccess.getUserById(userId);
     }
 
 

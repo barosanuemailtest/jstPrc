@@ -13,8 +13,8 @@ export class UsersDBAccess {
 
     }
 
-    public async getUserById(userId: string): Promise<void> {
-
+    public async getUserById(userId: string): Promise<User> {
+        return {} as User;
     }
 
 

@@ -15,3 +15,16 @@ Content-Type: application/json
     "username": "sefu",
     "password": "12345"
 }
+
+###
+
+POST http://localhost:8080/users/get?id=123
+# Content-Type: application/json
+
+# {
+#     "username": "sefu",
+#     "password": "12345"
+# }
+
+###
+GET http://localhost:8080/users/get?id=123
