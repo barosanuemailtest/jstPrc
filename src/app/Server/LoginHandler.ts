@@ -27,19 +27,6 @@ export class LoginHandler extends BaseRequestHandler {
         }
     }
 
-    private async getRequestBody(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            let body = '';
-            this.request.on('data', (data: string) => {
-                body += data;
-            });
-            this.request.on('end', () => {
-                resolve(JSON.parse(body));
-            });
-            this.request.on('error', (error: any) => {
-                reject(error)
-            })
-        });
-    }
+
 
 }

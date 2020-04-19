@@ -7,6 +7,8 @@ Content-Type: application/json
 }
 
 ###
+GET https://postman-echo.com/get?foo1=bar1&foo2=bar2
+###
 
 POST http://localhost:8080/login
 Content-Type: application/json
@@ -28,4 +30,15 @@ POST http://localhost:8080/users/get?id=123
 
 ###
 GET http://localhost:8080/users/get?id=1233sdf
-Authorization: v7ver7809jbt24uy3m9su
+Authorization: z7jny69rqsm37r4cpy3xlc
+###
+PUT http://localhost:8080/users/create
+Authorization: z7jny69rqsm37r4cpy3xlc
+Content-Type: application/json
+
+{""""";"
+  "age": 45,
+  "email": "some@otheremail.com",
+  "name": "barosanu",
+  "workingPosition": 3
+}

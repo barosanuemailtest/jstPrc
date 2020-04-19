@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { Authorizer } from '../Authorization/Authorizer';
 import { AccessRights, TokenState } from '../Authorization/Model';
-import { OperationState } from './Model';
+import { OperationState, HTTP_CODES } from './Model';
 
 export abstract class BaseRequestHandler {
 
@@ -17,7 +17,7 @@ export abstract class BaseRequestHandler {
 
     abstract async handleRequest(): Promise<void>;
 
-    public async operationAuthorized(operation: AccessRights): Promise<OperationState> {
+    protected async operationAuthorized(operation: AccessRights): Promise<OperationState> {
         const token = this.getToken();
         if (token) {
             const tokenRights = await this.authorizer.getTokenRights(token);
@@ -34,4 +34,34 @@ export abstract class BaseRequestHandler {
     private getToken(): string | undefined {
         return this.request.headers.authorization;
     }
+
+    protected respondObject(object: any, statusCode: HTTP_CODES) {
+        this.response.writeHead(statusCode, { 'Content-Type': 'application/json' });
+        this.response.write(JSON.stringify(object))
+    }
+
+    protected respondText(text: string, statusCode: HTTP_CODES) {
+        this.response.writeHead(statusCode)
+        this.response.write(text);
+    }
+
+    protected async getRequestBody(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let body = '';
+            this.request.on('data', (data: string) => {
+                body += data;
+            });
+            this.request.on('end', () => {
+                try {
+                    resolve(JSON.parse(body));
+                } catch (jsonError) {
+                    reject(jsonError)
+                }
+            });
+            this.request.on('error', (error: any) => {
+                reject(error)
+            })
+        });
+    }
+
 }

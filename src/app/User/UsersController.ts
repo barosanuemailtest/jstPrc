@@ -11,11 +11,16 @@ export class UserController {
     }
 
     public async addUser(user: User) {
+        user.id = this.generateRandomUserId();
         await this.userDBAccess.putUser(user);
     }
 
     public async getUserById(userId: string): Promise<User | null> {
         return await this.userDBAccess.getUserById(userId);
+    }
+
+    private generateRandomUserId(): string {
+        return Math.random().toString(36).slice(2)
     }
 
 
