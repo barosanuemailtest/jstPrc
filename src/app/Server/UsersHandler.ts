@@ -17,6 +17,9 @@ export class UsersHandler extends BaseRequestHandler {
                 case 'get':
                     await this.handleGetUser();
                     break;
+                case 'getall':
+                    await this.handleGetAllUsers();
+                    break;
                 case 'create':
                     await this.handleCreateUser();
                     break;
@@ -31,6 +34,8 @@ export class UsersHandler extends BaseRequestHandler {
             this.respondText(error.message, HTTP_CODES.BAD_REQUEST);
         }
     }
+
+
 
     private async handleUpdateUser(): Promise<void> {
         const operationState = await this.operationAuthorized(AccessRights.UPDATE);
@@ -70,5 +75,19 @@ export class UsersHandler extends BaseRequestHandler {
         }
     }
 
-
+    private async handleGetAllUsers(): Promise<void> {
+        const operationState = await this.operationAuthorized(AccessRights.READ);
+        if (operationState.authorized) {
+            const users = await this.usersController.getAllUsers()
+            if (users) {
+                this.respondObject(users, HTTP_CODES.OK);
+            } else {
+                this.respondText(`No users found`, HTTP_CODES.NOT_fOUND);
+            }
+        } else {
+            this.respondObject(operationState, HTTP_CODES.UNAUTHORIZED);
+        }
+    }
 }
+
+

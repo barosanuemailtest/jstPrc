@@ -46,7 +46,7 @@ describe.skip('main spec suite', () => {
         console.log(getResult);
     })
 
-    test.only('authorizer.loginUser', async () => {
+    test('authorizer.loginUser', async () => {
         const authorizer = new Authorizer();
         const loginResult = await authorizer.loginUser('supersefu', '1234');
         console.log(loginResult);
@@ -85,6 +85,12 @@ describe.skip('main spec suite', () => {
         const userDatabase = new UsersDBAccess();
         const user = await userDatabase.getUserById('1233sdf');
         console.log(user);
+    });
+
+    test.only('get all users', async () => {
+        const userDatabase = new UsersDBAccess();
+        const users = await userDatabase.getAllUsers();
+        const a = 5;
     });
 
 

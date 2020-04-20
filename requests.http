@@ -32,6 +32,9 @@ POST http://localhost:8080/users/get?id=123
 GET http://localhost:8080/users/get?id=akjsz2iiowt
 Authorization: reno2z33pglio14vkfob
 ###
+GET http://localhost:8080/users/getall
+Authorization: reno2z33pglio14vkfob
+###
 PUT http://localhost:8080/users/create
 Authorization: reno2z33pglio14vkfob
 Content-Type: application/json

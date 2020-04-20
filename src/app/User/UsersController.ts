@@ -19,6 +19,10 @@ export class UserController {
         return await this.userDBAccess.getUserById(userId);
     }
 
+    public async getAllUsers(): Promise<User[]> {
+        return await this.userDBAccess.getAllUsers();
+    }
+
     public async updateUser(user: User) {
         await this.userDBAccess.updateUser(user);
         this.reloadDataBase();

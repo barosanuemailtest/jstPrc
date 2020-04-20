@@ -2,6 +2,7 @@ import * as Nedb from 'nedb';
 import { User } from './Model';
 
 export class UsersDBAccess {
+
     private nedb: Nedb;
 
     constructor(nedb = new Nedb('databases/users.db')) {
@@ -46,6 +47,22 @@ export class UsersDBAccess {
                         return resolve(null);
                     } else {
                         return resolve(docs[0]);
+                    }
+                }
+            });
+        });
+    }
+
+    public async getAllUsers(): Promise<User[]> {
+        return new Promise((resolve, reject) => {
+            this.nedb.find({}, (err: Error, docs: any) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    if (docs.length == 0) {
+                        return resolve([]);
+                    } else {
+                        return resolve(docs);
                     }
                 }
             });
