@@ -4,6 +4,7 @@ import { UserCredentialsDBAccess } from '../src/app/Authorization/UserCredential
 import { Authorizer } from '../src/app/Authorization/Authorizer';
 import { UsersDBAccess } from '../src/app/User/UsersDBAccess';
 import { User } from '../src/app/User/Model';
+import { UserController } from '../src/app/User/UsersController';
 
 describe.skip('main spec suite', () => {
 
@@ -46,7 +47,7 @@ describe.skip('main spec suite', () => {
         console.log(getResult);
     })
 
-    test('authorizer.loginUser', async () => {
+    test.only('authorizer.loginUser', async () => {
         const authorizer = new Authorizer();
         const loginResult = await authorizer.loginUser('supersefu', '1234');
         console.log(loginResult);
@@ -87,10 +88,14 @@ describe.skip('main spec suite', () => {
         console.log(user);
     });
 
-    test.only('get all users', async () => {
+    test('get all users', async () => {
         const userDatabase = new UsersDBAccess();
         const users = await userDatabase.getAllUsers();
-        const a = 5;
+    });
+
+    test('delete user', async () => {
+        const userController = new UserController();
+        await userController.deleteUser('1233sdf');
     });
 
 

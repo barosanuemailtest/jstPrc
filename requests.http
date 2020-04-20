@@ -32,6 +32,10 @@ POST http://localhost:8080/users/get?id=123
 GET http://localhost:8080/users/get?id=akjsz2iiowt
 Authorization: reno2z33pglio14vkfob
 ###
+
+DELETE  http://localhost:8080/users/delete?id=6npi74tki85
+Authorization: kwyrdftu8x9r5iope1cap
+###
 GET http://localhost:8080/users/getall
 Authorization: reno2z33pglio14vkfob
 ###

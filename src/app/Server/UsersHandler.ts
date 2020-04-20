@@ -26,7 +26,9 @@ export class UsersHandler extends BaseRequestHandler {
                 case 'update':
                     await this.handleUpdateUser();
                     break;
-
+                case 'delete':
+                    await this.handleDeleteUser();
+                    break;
                 default:
                     break;
             }
@@ -35,6 +37,17 @@ export class UsersHandler extends BaseRequestHandler {
         }
     }
 
+
+    private async handleDeleteUser(): Promise<void> {
+        const operationState = await this.operationAuthorized(AccessRights.DELETE);
+        if (operationState.authorized) {
+            const id = Utils.parseUrl(this.request.url!).query.id as string;
+            await this.usersController.deleteUser(id);
+            this.respondText(`user ${id} deleted`, HTTP_CODES.OK);
+        } else {
+            this.respondObject(operationState, HTTP_CODES.UNAUTHORIZED);
+        }
+    }
 
 
     private async handleUpdateUser(): Promise<void> {

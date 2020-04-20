@@ -29,7 +29,7 @@ export class UsersDBAccess {
                 if (err) {
                     return reject(err);
                 } else if (numReplaced == 0) {
-                    return reject('No users updated!');
+                    return reject(new Error('No users updated!'));
                 } else {
                     resolve();
                 }
@@ -69,11 +69,18 @@ export class UsersDBAccess {
         });
     }
 
-    public loadDatabase(): void {
-        this.nedb = new Nedb('databases/users.db')
-        this.nedb.persistence.compactDatafile();
-        this.nedb.loadDatabase();
+    public async deleteUser(userId: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.nedb.remove({ id: userId }, {}, (err: Error, numRemoved: number) => {
+                if (err) {
+                    return reject(err);
+                } else if (numRemoved == 0) {
+                    return reject(new Error('User not deleted!'));
+                } else {
+                    resolve();
+                }
+            })
+        });
     }
-
 
 }

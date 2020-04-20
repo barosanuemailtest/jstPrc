@@ -28,6 +28,11 @@ export class UserController {
         this.reloadDataBase();
     }
 
+    public async deleteUser(userId: string) {
+        await this.userDBAccess.deleteUser(userId);
+        this.reloadDataBase();
+    }
+
     private generateRandomUserId(): string {
         return Math.random().toString(36).slice(2)
     }
