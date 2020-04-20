@@ -3,6 +3,7 @@ import { SessionTokenDBAccessSqllite } from '../gunoi/SessionTokenDBAccessSqllit
 import { UserCredentialsDBAccess } from '../src/app/Authorization/UserCredentialsDBAccess';
 import { Authorizer } from '../src/app/Authorization/Authorizer';
 import { UsersDBAccess } from '../src/app/User/UsersDBAccess';
+import { User } from '../src/app/User/Model';
 
 describe.skip('main spec suite', () => {
 
@@ -68,7 +69,19 @@ describe.skip('main spec suite', () => {
         });
     });
 
-    test.only('get user', async () => {
+    test('update user', async () => {
+        const userDatabase = new UsersDBAccess();
+        const newUser: User = {
+            age: 23,
+            email: 'some@email.com-UPDATED',
+            id: '1233sdf',
+            name: 'sefu',
+            workingPosition: 2
+        }
+        await userDatabase.updateUser(newUser);
+    });
+
+    test('get user', async () => {
         const userDatabase = new UsersDBAccess();
         const user = await userDatabase.getUserById('1233sdf');
         console.log(user);

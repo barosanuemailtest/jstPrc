@@ -29,16 +29,28 @@ POST http://localhost:8080/users/get?id=123
 # }
 
 ###
-GET http://localhost:8080/users/get?id=1233sdf
-Authorization: z7jny69rqsm37r4cpy3xlc
+GET http://localhost:8080/users/get?id=akjsz2iiowt
+Authorization: reno2z33pglio14vkfob
 ###
 PUT http://localhost:8080/users/create
-Authorization: z7jny69rqsm37r4cpy3xlc
+Authorization: reno2z33pglio14vkfob
 Content-Type: application/json
 
-{""""";"
+{
   "age": 45,
   "email": "some@otheremail.com",
+  "name": "barosanu",
+  "workingPosition": 3
+}
+###
+PUT http://localhost:8080/users/update
+Authorization: reno2z33pglio14vkfob
+Content-Type: application/json
+
+{
+  "age": 45,
+  "id": "akjsz2iiowt",
+  "email": "some@otheremail.com-UPDATED",
   "name": "barosanu",
   "workingPosition": 3
 }

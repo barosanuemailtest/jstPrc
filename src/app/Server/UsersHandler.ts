@@ -20,6 +20,9 @@ export class UsersHandler extends BaseRequestHandler {
                 case 'create':
                     await this.handleCreateUser();
                     break;
+                case 'update':
+                    await this.handleUpdateUser();
+                    break;
 
                 default:
                     break;
@@ -28,6 +31,18 @@ export class UsersHandler extends BaseRequestHandler {
             this.respondText(error.message, HTTP_CODES.BAD_REQUEST);
         }
     }
+
+    private async handleUpdateUser(): Promise<void> {
+        const operationState = await this.operationAuthorized(AccessRights.UPDATE);
+        if (operationState.authorized) {
+            const user: User = await this.getRequestBody();
+            await this.usersController.updateUser(user);
+            this.respondText(`user ${user.name} with id ${user.id} updated`, HTTP_CODES.CREATED);
+        } else {
+            this.respondObject(operationState, HTTP_CODES.UNAUTHORIZED);
+        }
+    }
+
 
     private async handleCreateUser(): Promise<void> {
         const operationState = await this.operationAuthorized(AccessRights.CREATE);
