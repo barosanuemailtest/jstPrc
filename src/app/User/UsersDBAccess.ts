@@ -25,7 +25,6 @@ export class UsersDBAccess {
     public async updateUser(user: User): Promise<void> {
         return new Promise((resolve, reject) => {
             this.nedb.update({ id: user.id }, user, {}, (err: Error, numReplaced: number) => {
-                console.log('numReplaced: ' + numReplaced);
                 if (err) {
                     return reject(err);
                 } else if (numReplaced == 0) {

@@ -4,10 +4,18 @@ import { Utils } from "./Utils";
 import { HTTP_CODES } from "./Model";
 import { AccessRights } from "../Authorization/Model";
 import { User } from "../User/Model";
+import { IncomingMessage, ServerResponse } from "http";
+import { Authorizer } from "../Authorization/Authorizer";
 
 export class UsersHandler extends BaseRequestHandler {
 
-    private usersController: UserController = new UserController();
+    private usersController: UserController;
+
+    constructor(request: IncomingMessage, response: ServerResponse, authorizer: Authorizer,
+        usersController: UserController = new UserController()) {
+        super(request, response, authorizer);
+        this.usersController = usersController;
+    }
 
 
     public async handleRequest(): Promise<void> {
