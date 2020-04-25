@@ -25,7 +25,10 @@ describe('UsersHandler test suite', () => {
 
     const usersControllerMock = {
         deleteUser: jest.fn(),
-        updateUser: jest.fn()
+        updateUser: jest.fn(),
+        addUser: jest.fn(),
+        getUserById: jest.fn(),
+        getAllUsers: jest.fn()
     }
 
     beforeEach(() => {
@@ -108,6 +111,96 @@ describe('UsersHandler test suite', () => {
         expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.CREATED);
         expect(responseMock.write).toBeCalledWith(`user ${someUser.name} with id ${someUser.id} updated`);
     })
+
+    test('createUser - no valid token', async () => {
+        requestMock.url = '/users/create';
+        authorizerMock.getTokenRights.mockReturnValueOnce(noRightsToken);
+        await usersHandler.handleRequest();
+        expect(usersControllerMock.addUser).toBeCalledTimes(0);
+        expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.UNAUTHORIZED, { 'Content-Type': 'application/json' });
+        expect(responseMock.write).toBeCalledWith(JSON.stringify(noRightsOperation));
+    });
+
+    test('createUser - valid token', async () => {
+        requestMock.url = '/users/create';
+        authorizerMock.getTokenRights.mockReturnValueOnce(allRightsToken);
+        requestMock.on.mockImplementation(
+            (event: string, cb: any) => {
+                switch (event) {
+                    case 'data':
+                        cb(JSON.stringify(someUser))
+                        break;
+                    case 'end':
+                        cb()
+                        break;
+                }
+            }
+        )
+        await usersHandler.handleRequest();
+        expect(usersControllerMock.addUser).toBeCalledWith(someUser);
+        expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.CREATED);
+        expect(responseMock.write).toBeCalledWith(`user ${someUser.name} created`);
+    });
+
+    test('getUser - no valid token', async () => {
+        requestMock.url = '/users/get';
+        authorizerMock.getTokenRights.mockReturnValueOnce(noRightsToken);
+        await usersHandler.handleRequest();
+        expect(usersControllerMock.getUserById).toBeCalledTimes(0);
+        expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.UNAUTHORIZED, { 'Content-Type': 'application/json' });
+        expect(responseMock.write).toBeCalledWith(JSON.stringify(noRightsOperation));
+    });
+
+    test('getUser - valid token, valid query', async () => {
+        requestMock.url = '/users/get?id=123';
+        authorizerMock.getTokenRights.mockReturnValueOnce(allRightsToken);
+        usersControllerMock.getUserById.mockReturnValueOnce(someUser);
+        await usersHandler.handleRequest();
+        expect(usersControllerMock.getUserById).toBeCalledTimes(1);
+        expect(usersControllerMock.getUserById).toBeCalledWith('123');
+        expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.OK, { 'Content-Type': 'application/json' });
+        expect(responseMock.write).toBeCalledWith(JSON.stringify(someUser));
+    });
+
+    test('getUser - valid token, invalid query', async () => {
+        requestMock.url = '/users/get?id=123';
+        authorizerMock.getTokenRights.mockReturnValueOnce(allRightsToken);
+        usersControllerMock.getUserById.mockReturnValueOnce(null);
+        await usersHandler.handleRequest();
+        expect(usersControllerMock.getUserById).toBeCalledTimes(1);
+        expect(usersControllerMock.getUserById).toBeCalledWith('123');
+        expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.NOT_fOUND);
+        expect(responseMock.write).toBeCalledWith('User with id 123 not found');
+    });
+
+    test('getAllUsers - no valid token', async () => {
+        requestMock.url = '/users/getall';
+        authorizerMock.getTokenRights.mockReturnValueOnce(noRightsToken);
+        await usersHandler.handleRequest();
+        expect(usersControllerMock.getAllUsers).toBeCalledTimes(0);
+        expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.UNAUTHORIZED, { 'Content-Type': 'application/json' });
+        expect(responseMock.write).toBeCalledWith(JSON.stringify(noRightsOperation));
+    });
+
+    test('getAllUsers - valid token, valid response', async () => {
+        requestMock.url = '/users/getall';
+        authorizerMock.getTokenRights.mockReturnValueOnce(allRightsToken);
+        usersControllerMock.getAllUsers.mockReturnValueOnce([someUser, someUser]);
+        await usersHandler.handleRequest();
+        expect(usersControllerMock.getAllUsers).toBeCalledTimes(1);
+        expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.OK, { 'Content-Type': 'application/json' });
+        expect(responseMock.write).toBeCalledWith(JSON.stringify([someUser, someUser]));
+    });
+
+    test('getAllUsers - valid token, invalid response', async () => {
+        requestMock.url = '/users/getall';
+        authorizerMock.getTokenRights.mockReturnValueOnce(allRightsToken);
+        usersControllerMock.getAllUsers.mockReturnValueOnce(null);
+        await usersHandler.handleRequest();
+        expect(usersControllerMock.getAllUsers).toBeCalledTimes(1);
+        expect(responseMock.writeHead).toBeCalledWith(HTTP_CODES.NOT_fOUND);
+        expect(responseMock.write).toBeCalledWith('No users found');
+    });
 
 
 
