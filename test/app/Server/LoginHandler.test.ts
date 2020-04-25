@@ -79,7 +79,6 @@ describe('LoginHandler test suite', () => {
         requestMock.method = 'POST';
         requestMock.on.mockImplementation(
             (event: string, cb: any) => {
-                console.log(event);
                 switch (event) {
                     case 'data':
                         cb(rawRequestBody)
