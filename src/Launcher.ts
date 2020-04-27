@@ -1,5 +1,6 @@
 import { Server } from './app/Server/Server';
 
+/* istanbul ignore file */
 export class Launcher {
 
     private server: Server;
