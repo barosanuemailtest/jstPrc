@@ -37,7 +37,7 @@ DELETE  http://localhost:8080/users/delete?id=6npi74tki85
 Authorization: kwyrdftu8x9r5iope1cap
 ###
 GET http://localhost:8080/users/getall
-Authorization: 85db5rj0nchrjtc2yylf
+Authorization: 1zrfyygxe5u0ka3byntzbn
 ###
 PUT http://localhost:8080/users/create
 Authorization: reno2z33pglio14vkfob

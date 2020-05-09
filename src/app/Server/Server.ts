@@ -15,7 +15,7 @@ export class Server {
     public createServer() {
         createServer(async (req, res) => {
             console.log('got request from ' + req.url)
-            this.setCors(res);
+            this.setCors(res, req);
             const basePath = Utils.getBasePath(req.url!);
 
             switch (basePath) {
@@ -32,8 +32,8 @@ export class Server {
         console.log('started server')
     }
 
-    private setCors(res: ServerResponse) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
+    private setCors(res: ServerResponse, req: IncomingMessage) {
+        res.setHeader('Access-Control-Allow-Origin', '*'); // req.headers.origin
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
         res.setHeader('Access-Control-Allow-Headers', '*');
     }

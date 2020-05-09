@@ -20,7 +20,8 @@ export class UserController {
     }
 
     public async getAllUsers(): Promise<User[]> {
-        return await this.userDBAccess.getAllUsers();
+        const users = await this.userDBAccess.getAllUsers();
+        return users;
     }
 
     public async updateUser(user: User) {
