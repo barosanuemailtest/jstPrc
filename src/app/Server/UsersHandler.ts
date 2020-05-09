@@ -97,6 +97,10 @@ export class UsersHandler extends BaseRequestHandler {
     }
 
     private async handleGetAllUsers(): Promise<void> {
+        if (this.request.method == 'OPTIONS') {
+            this.response.writeHead(HTTP_CODES.OK);
+            return;
+        }
         const operationState = await this.operationAuthorized(AccessRights.READ);
         if (operationState.authorized) {
             const users = await this.usersController.getAllUsers()

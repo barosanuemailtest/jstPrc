@@ -1,4 +1,4 @@
-import { createServer } from 'http';
+import { createServer, ServerResponse, IncomingMessage } from 'http';
 import { Authorizer } from '../Authorization/Authorizer';
 import { LoginHandler } from './LoginHandler';
 import { UsersHandler } from './UsersHandler';
@@ -15,6 +15,7 @@ export class Server {
     public createServer() {
         createServer(async (req, res) => {
             console.log('got request from ' + req.url)
+            this.setCors(res);
             const basePath = Utils.getBasePath(req.url!);
 
             switch (basePath) {
@@ -31,6 +32,9 @@ export class Server {
         console.log('started server')
     }
 
-
-
+    private setCors(res: ServerResponse) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', '*');
+    }
 }
