@@ -5,6 +5,10 @@ export class LoginHandler extends BaseRequestHandler {
 
     public async handleRequest(): Promise<void> {
         try {
+            if (this.request.method == 'OPTIONS') {
+                this.response.writeHead(HTTP_CODES.OK);
+                return;
+            }
             if (this.request.method !== 'POST') {
                 this.response.statusCode = HTTP_CODES.NOT_fOUND;
                 return;

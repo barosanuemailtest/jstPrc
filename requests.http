@@ -11,7 +11,7 @@ GET https://postman-echo.com/get?foo1=bar1&foo2=bar2
 ###
 
 POST http://localhost:8080/login
-Content-Type: application/json
+# Content-Type: application/json
 
 {
     "username": "sefu",
@@ -37,7 +37,7 @@ DELETE  http://localhost:8080/users/delete?id=6npi74tki85
 Authorization: kwyrdftu8x9r5iope1cap
 ###
 GET http://localhost:8080/users/getall
-Authorization: 1zrfyygxe5u0ka3byntzbn
+Authorization: 2kj43e2j0a300ygu2fxc66x
 ###
 PUT http://localhost:8080/users/create
 Authorization: reno2z33pglio14vkfob

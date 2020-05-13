@@ -20,6 +20,10 @@ export class UsersHandler extends BaseRequestHandler {
 
     public async handleRequest(): Promise<void> {
         try {
+            if (this.request.method == 'OPTIONS') {
+                this.response.writeHead(HTTP_CODES.OK);
+                return;
+            }
             const secondPath = Utils.getSecondPath(this.request.url!);
             switch (secondPath) {
                 case 'get':
@@ -97,14 +101,12 @@ export class UsersHandler extends BaseRequestHandler {
     }
 
     private async handleGetAllUsers(): Promise<void> {
-        if (this.request.method == 'OPTIONS') {
-            this.response.writeHead(HTTP_CODES.OK);
-            return;
-        }
+
         const operationState = await this.operationAuthorized(AccessRights.READ);
         if (operationState.authorized) {
             const users = await this.usersController.getAllUsers()
             if (users) {
+                console.log('Responding query: ' + users.length)
                 this.respondObject(users, HTTP_CODES.OK);
             } else {
                 this.respondText(`No users found`, HTTP_CODES.NOT_fOUND);
