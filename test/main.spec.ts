@@ -47,7 +47,7 @@ describe.skip('main spec suite', () => {
         console.log(getResult);
     })
 
-    test.only('authorizer.loginUser', async () => {
+    test('authorizer.loginUser', async () => {
         const authorizer = new Authorizer();
         const loginResult = await authorizer.loginUser('supersefu', '1234');
         console.log(loginResult);
@@ -65,7 +65,7 @@ describe.skip('main spec suite', () => {
             age: 23,
             email: 'some@email.com',
             id: '1233sdf',
-            name: 'sefu',
+            name: 'sefu2',
             workingPosition: 2
         });
     });
@@ -96,6 +96,12 @@ describe.skip('main spec suite', () => {
     test('delete user', async () => {
         const userController = new UserController();
         await userController.deleteUser('1233sdf');
+    });
+    test.only('get users by name', async () => {
+        const userDatabase = new UsersDBAccess();
+        const users = await userDatabase.getUsersByName('sefu');
+
+        const a = 5;
     });
 
 

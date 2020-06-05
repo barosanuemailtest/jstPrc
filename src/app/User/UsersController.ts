@@ -19,6 +19,10 @@ export class UserController {
         return await this.userDBAccess.getUserById(userId);
     }
 
+    public async getUsersByName(name: string): Promise<User[]> {
+        return await this.userDBAccess.getUsersByName(name);
+    }
+
     public async getAllUsers(): Promise<User[]> {
         const users = await this.userDBAccess.getAllUsers();
         return users;

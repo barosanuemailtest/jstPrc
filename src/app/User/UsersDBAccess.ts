@@ -52,6 +52,19 @@ export class UsersDBAccess {
         });
     }
 
+    public async getUsersByName(name: string): Promise<User[]> {
+        const regex = new RegExp(name)
+        return new Promise((resolve, reject) => {
+            this.nedb.find({ name: regex }, (err: Error, docs: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
+        });
+    }
+
     public async getAllUsers(): Promise<User[]> {
         return new Promise((resolve, reject) => {
             this.nedb.find({}, (err: Error, docs: any) => {
